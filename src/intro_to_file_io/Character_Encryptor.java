@@ -10,8 +10,11 @@ public class Character_Encryptor {
 
 	public static void main(String[] args) {
 		String s = JOptionPane.showInputDialog("What is your message?");
+		char c; 
 		for (int i = 0; i < s.length(); i++) {
-			input += s.charAt(i) + 10 + " ";
+			c = s.charAt(i);
+			c += 10;
+			input +=Character.toString(c);
 		}
 		System.out.println(input);
 		try {
