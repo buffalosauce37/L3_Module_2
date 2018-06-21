@@ -18,7 +18,6 @@ public class Character_Decryptor {
 		}
 		try {
 			FileReader fr = new FileReader(fileName);
-
 			int c = fr.read();
 			while (c != -1) {
 				c -= 10;
