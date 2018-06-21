@@ -1,3 +1,4 @@
+//Copy Right by Jack Alexander
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -5,25 +6,26 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CopyRight {
-	static String line;
-	static String fileContent = "";
+
 
 	public static void addCopyRight(File file) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
+		String fileContent = "";
+		String line;
+		try {BufferedReader br = new BufferedReader(new FileReader(file));
 
 			line = br.readLine();
 			while (line != null) {
+				fileContent += line + "\n";
 				System.out.println(line);
 				line = br.readLine();
-				fileContent += line;
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
 			FileWriter fw = new FileWriter(file, false);
-			fw.write("wow" + fileContent);
+			fw.write("//Copy Right by Jack Alexander" + "\n" + fileContent);
 			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -36,8 +38,9 @@ public class CopyRight {
 		for (int i = 0; i < files.length; i++) {
 			String filename = files[i].getName();
 			if (filename.contains(".java")) {
-				System.out.println(files[i]);
+				addCopyRight(files[i]);
 			}
 		}
 	}
 }
+
