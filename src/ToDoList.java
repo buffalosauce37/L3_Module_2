@@ -1,5 +1,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -9,27 +14,28 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ToDoList implements ActionListener {
-	JButton button1 = new JButton("add task");
-	JButton button2 = new JButton("remove task");
-	JButton button3 = new JButton("save");
-	JButton button4 = new JButton("load");
+	JButton add = new JButton("add task");
+	JButton delete = new JButton("remove task");
+	JButton save = new JButton("save");
+	JButton load = new JButton("load");
 	ArrayList<String> tasks = new ArrayList<>();
 	String x;
+	String y;
 
 	void setup() {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel();
 		frame.add(panel);
-		panel.add(button1);
-		panel.add(button2);
-		panel.add(button3);
-		panel.add(button4);
+		panel.add(add);
+		panel.add(delete);
+		panel.add(save);
+		panel.add(load);
 		panel.add(label);
-		button1.addActionListener(this);
-		button2.addActionListener(this);
-		button3.addActionListener(this);
-		button4.addActionListener(this);
+		add.addActionListener(this);
+		delete.addActionListener(this);
+		save.addActionListener(this);
+		load.addActionListener(this);
 		frame.setVisible(true);
 		frame.pack();
 	}
@@ -42,8 +48,47 @@ public class ToDoList implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource() == button1) {
+		if (e.getSource() == add) {
 			x = JOptionPane.showInputDialog("Add Task");
+			tasks.add(x);
+		}
+		if (e.getSource() == delete) {
+			y = JOptionPane.showInputDialog("Delete Task");
+			tasks.remove(y);
+		}
+		if (e.getSource() == save) {
+			String fileContents = "";
+			for (int i = 0; i < tasks.size(); i++) {
+				String s = tasks.get(i);
+				fileContents += s + "\n";
+			}
+			try {
+				FileWriter fw = new FileWriter("src/intro_to_file_io/test.txt");
+				fw.write(fileContents);
+				fw.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+
+			}
+		}
+		if (e.getSource() == load) {
+			try {
+				BufferedReader br = new BufferedReader(new FileReader("src/intro_to_file_io/test.txt"));
+				
+				String line = br.readLine();
+				while(line != null){
+					System.out.println(line);
+					line = br.readLine();
+				}
+				
+				br.close();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 }
